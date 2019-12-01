@@ -1,0 +1,61 @@
+textarea.form-control {
+    width: 90%;
+}
+input.form-control{
+    width : 90%;
+}
+.hidden {
+    display : none;
+}
+
+body{
+    background-color: blanchedalmond !important;
+}
+
+.myMargin{
+    margin: 0.5em;
+}
+#hackathonName{
+    margin : 1% 40% 1% 40%;
+//border: 2px black solid;
+    font-size: 2em;
+}
+
+.pageTitle{
+    margin-top: 1%;
+    margin-left: 1%;
+}
+
+#hackathonList{
+    margin-left: 7%;
+}
+
+.ht_master tr td {
+    background-color: whitesmoke;
+    color: black;
+    border-radius: 0.1em;
+    padding: 1em;
+}
+
+.ht_clone_top th {
+    solid-color: #fafafa;
+    background-color: #138496;
+}
+.ht_master{
+    width:100%;
+}
+
+
+#userStory1{
+    margin-left: 7%;
+    margin-right: 7%;
+    width: auto;
+}
+
+.ht_master tr:nth-of-type(odd) > td {
+    background-color: #e6e6e6;
+}
+/* Every even row */
+.ht_master tr:nth-of-type(even) > td {
+    background-color: #fafafa;
+}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Story 1</title>
+    <link rel="stylesheet" href="../css/customBootstrap.css">
+</head>
+
+
+<script type="text/javascript" src="../js/HEADERS.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handsontable-pro@5.0.1/dist/handsontable.full.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="../js/ajaxCalls/index.js"></script>
+
+<script type="text/javascript" src="../js/renderer/hackathon/eventNameRenderer.js"></script>
+<script type="text/javascript" src="../js/renderer/hackathon/moOfficeRenderer.js"></script>
+<script type="text/javascript" src="../js/renderer/hackathon/dateRenderer.js"></script>
+<script type="text/javascript" src="../js/renderer/hackathon/totalIdeasRenderer.js"></script>
+<script type="text/javascript" src="../js/renderer/hackathon/viewIdeaButtonRenderer.js"></script>
+<script type="text/javascript" src="../js/renderer/hackathon/hackathonBaseRenderer.js"></script>
+
+<script type="text/javascript" src="../js/renderer/idea/editIdeaButtonRenderer.js"></script>
+<script type="text/javascript" src="../js/renderer/idea/likeButtonRenderer.js"></script>
+<script type="text/javascript" src="../js/renderer/idea/ideaDetailsRenderer.js"></script>
+<script type="text/javascript" src="../js/renderer/idea/ideaSummaryRenderer.js"></script>
+<script type="text/javascript" src="../js/renderer/idea/ideaCategoryRenderer.js"></script>
+<script type="text/javascript" src="../js/renderer/idea/ideaLikesRenderer.js"></script>
+<script type="text/javascript" src="../js/renderer/idea/ideaMemberRenderer.js"></script>
+<script type="text/javascript" src="../js/renderer/idea/ideaBaseRenderer.js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+-->
+
+<link type="text/css" href="https://cdn.jsdelivr.net/npm/handsontable-pro@5.0.1/dist/handsontable.full.min.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<body>
+<div data-bind="ifnot : loggedIn" class="form-group" align="center">
+    <center>
+        <label><h1 class="display-3">Member ID:</h1></label>
+        <input type="text" data-bind="value : $root.memberID" class="form-control">
+        <br>
+        <button data-bind="click : $root.logIn" class="btn btn-primary btn-lg">Log In</button>
+    </center>
+</div>
+<div data-bind="if :loggedIn">
+    <center><h5 class="display-5">Welcome <span data-bind="text : memberName"></span></h5></center>
+</div>
+<!--<div data-bind="if : loggedIn">-->
+<div data-bind="ifnot : showHackathons">
+    <div class="container">
+        <center><h1 class="display-3" data-bind="text : $root.selectedHackathon"></h1></center>
+        <select id="categoryFilter" data-bind="value : $root.filterIdeaCategory , options : categoryList , data : 'All'" class="form-control pageTitle">
+        </select>
+        <br/>
+    </div>
+</div>
+
+<div class="container" data-bind="if : showHackathons() && loggedIn()">
+    <h1 class="display-3">
+        <center>Hackathons</center>
+    </h1>
+</div>
+<div id="userStory1" data-bind="if : loggedIn">
+    <button type="button" class="btn btn-primary" data-bind="visible : loggedIn , text : addButtonContent , click : addNew" data-backdrop="static" data-keyboard="false">
+    </button>
+</div>
+
+<!--
+<div id="debug" data-bind="with : hackathons">
+    <span data-bind="text : ko.toJSON($data)"></span>
+</div>
+-->
+<!-- The Modal -->
+<div class="modal fade" id="myModal" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" class="font-weight-bold" data-bind="text : $root.modalContent"></h4>
+                <button type="button" class="close" data-bind="click : closeModal">x</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div data-bind="if : showHackathons" class="form-group">
+                    <label>Event Name:</label>
+                    <input type="text" class="form-control">
+                    <label>MO Office Location</label>
+                    <select class="form-control" id="sel1">
+                        <option>Pune</option>
+                        <option>New York</option>
+                        <option>Chicago</option>
+                        <option>Australia</option>
+                    </select>
+                    <label>Date Conducted</label>
+                    <input type="date" class="form-control">
+                </div>
+                <div data-bind="ifnot : showHackathons" class="form-group">
+                    <label>Idea Summary</label>
+                    <input data-bind="value : $root.selectedIdeaSummary" type="text" class="form-control" required>
+                    <label>Idea Details</label>
+                    <textarea data-bind="value : $root.selectedIdeaDetails" type="text" class="form-control" rows="5" required></textarea>
+                    <label>Category</label>
+                    <select data-bind="value : $root.selectedIdeaCategory , options : categoryList" class='form-control' required>
+                    </select>
+                    <label>Team Members</label>
+                    <textarea data-bind="value : $root.selectedIdeaMembers , valueUpdate : 'afterkeydown'" class="form-control" rows="3" required></textarea>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="text : $root.modalContent , click  : goToAddModifyIdea"></button>
+            </div>
+        </div>
+    </div>
+    <!--</div>-->
+</div>
+
+</body>
+<script type="text/javascript" src="../js/UserStory1.js"></script>
+</html>
